@@ -1,5 +1,6 @@
-
 from django.db import models
+from django.template.defaultfilters import slugify
+
 from media import images
 
 
@@ -27,7 +28,8 @@ class Product(models.Model):
     quantity = models.IntegerField(default=1)
     image = models.ImageField(upload_to='images/')
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='products')
-    default_category = models.ForeignKey('Category',on_delete=models.CASCADE, related_name='default_products', default=1)
+    default_category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='default_products',
+                                         default=1)
 
     @property
     def discounted_price(self):
