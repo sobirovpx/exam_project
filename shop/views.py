@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
@@ -91,3 +92,13 @@ def order(request):
         else:
             form = OrderModelForm()
         return render(request, 'shop/detail.html', {'form': form})
+
+
+def page_view(request):
+    object_list = Product.objects.all()
+    paginator = Paginator(object_list, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'shop/home.html', {'page_obj': page_obj})
